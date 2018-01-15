@@ -1,4 +1,4 @@
-#coding:utf-8
+﻿#coding:utf-8
 import re
 from urllib.request import Request
 import urllib.request
@@ -12,7 +12,7 @@ import sys
     作用：封装教务处爬虫相关类，提供一些基本接口
     参数：用户名，密码
     Author：WellLee
-    最后一次修改时间：2018年1月14日 18:53:02
+    最后一次修改时间：2018年1月15日 11:44:33
 """
 class DeanCrawler:
     """
@@ -69,7 +69,7 @@ class DeanCrawler:
         作用：获取当前访问的页面
         参数：self
         返回值：当前保存的页面（str）
-        最后一次修改时间：2018年1月14日 18:52:29
+        最后一次修改时间：2018年1月15日 11:44:23
     """
     def getcurrentPage(self):
         return self.__curPage
@@ -89,8 +89,8 @@ class DeanCrawler:
         方法名：classtabel
         作用：爬取选课课程表数据
         参数：self
-        返回值：选课课程数据（Dict）
-        最后一次修改时间：2018年1月14日 18:52:29
+        返回值：选课课程数据（List）
+        最后一次修改时间：2018年1月15日 11:44:20
     """
     def classtable(self):
         self.verify()
@@ -101,32 +101,34 @@ class DeanCrawler:
         cs_count = len(tbody)
         courses = {}
         temp = []
-        for i in range(0, cs_count):
-            if i % 11 == 0 and i != 0:
+        for i in range(0, cs_count + 1):
+            if(i % 11 == 0 and i != 0)  :
                 courses[temp[1]] = temp
                 temp = []
-            temp.append(tbody[i].text)
-        cs_final = {}
+            if i < cs_count:
+                temp.append(tbody[i].text)
+        cs_final = []
+
         for course in courses:
+            cs_list = []
+            cs_list.append(courses[course][0])
+            cs_list.append(course)
             for i in range(4, 11):
-                cs_final[course] = {}
                 if courses[course][i] != u'\n':
-                    cs_final[course]['cs_ID'] = courses[course][0]
-                    cs_final[course]['cs_week'] = (i - 3)
                     tempstr = courses[course][i]
                     tempstr = tempstr.split(u'\n')
-                    cs_final[course]['cs_weeks'] = tempstr[2]
-                    cs_final[course]['cs_time'] = tempstr[3]
-                    cs_final[course]['cs_classroom'] = tempstr[4]
-                    cs_final[course]['cs_teacher'] = tempstr[5]
-                    break
+                    cs_list.append(tempstr[2])
+                    cs_list.append(tempstr[3])
+                    cs_list.append(tempstr[4])
+                    cs_list.append(tempstr[5])
+            cs_final.append(cs_list)
         return cs_final
     """
         方法名：totalScore
         作用：爬取综合成绩单
         参数：self
         返回值：综合成绩单(dict)
-        最后一次修改时间：2018年1月14日 18:52:29
+        最后一次修改时间：2018年1月15日 11:44:17
     """
     def TotalScore(self):
         self.verify()
@@ -135,24 +137,26 @@ class DeanCrawler:
         null = None
         jsondata = eval(self.__curPage)
         scores = jsondata['data']
-        resultList = {}
+        resultList = []
         for i in scores:
             id = i['pt'] + i['kcxz'] + i['kch']
-            resultList[id] = {}
-            resultList[id]['cs_score'] = i['cj']
-            resultList[id]['cs_year'] = i['nd']
-            resultList[id]['cs_term'] = i['xq']
-            resultList[id]['cs_level'] = i['kh']
-            resultList[id]['cs_credit'] = i['xf']
-            resultList[id]['cs_GPA'] = i['jd']
-            resultList[id]['cs_name'] = i['course']['kcmc']
+            score = []
+            score.append(id)
+            score.append(i['cj'])
+            score.append(i['course']['kcmc'])
+            score.append(i['nd'])
+            score.append(i['xq'])
+            score.append(i['kh'])
+            score.append(i['xf'])
+            score.append(i['jd'])
+            resultList.append(score)
         return resultList
     """
         方法名：InternalExamScores
         作用：爬取国家成绩表。
         参数：self
         返回值：国家成绩数据（list）
-        最后一次修改时间：2018年1月14日 18:52:29
+        最后一次修改时间：2018年1月15日 11:44:13
     """
     def InternalExamScores(self):
         self.verify()
@@ -175,8 +179,8 @@ class DeanCrawler:
         方法名：InternalExamScores
         作用：爬取待确认成绩数据
         参数：self
-        返回值：待确认成绩(dict)
-        最后一次修改时间：2018年1月14日 18:52:29
+        返回值：待确认成绩(List)
+        最后一次修改时间：2018年1月15日 11:44:09
     """
     def unconfirmedScore(self):
         self.verify()
@@ -192,24 +196,7 @@ class DeanCrawler:
             if (i == u'正常' or i == u'补考' or i == u'重修'):
                 resultList.append(temp)
                 temp = []
-        resultdict = {}
-        for i in resultList:
-            if len(i) == 10:
-                resultdict[i[2]] = {}
-                resultdict[i[2]]['cs_name'] = i[3]
-                resultdict[i[2]]['cs_year'] = i[0]
-                resultdict[i[2]]['cs_term'] = i[1] + '期'
-                resultdict[i[2]]['cs_zp'] = i[6]
-                resultdict[i[2]]['cs_zpscore'] = i[7]
-            if len(i) == 11:
-                resultdict[i[2]] = {}
-                resultdict[i[2]]['cs_name'] = i[3]
-                resultdict[i[2]]['cs_year'] = i[0]
-                resultdict[i[2]]['cs_term'] = i[1] + '期'
-                resultdict[i[2]]['cs_psscore'] = i[6]
-                resultdict[i[2]]['cs_khscore'] = i[7]
-                resultdict[i[2]]['cs_totalscore'] = i[8]
-        return resultdict
+        return resultList
 
 
 
