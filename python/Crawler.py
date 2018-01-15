@@ -127,7 +127,7 @@ class DeanCrawler:
         方法名：totalScore
         作用：爬取综合成绩单
         参数：self
-        返回值：综合成绩单(dict)
+        返回值：综合成绩单(List)
         最后一次修改时间：2018年1月15日 11:44:17
     """
     def TotalScore(self):
