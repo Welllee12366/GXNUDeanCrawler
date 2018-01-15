@@ -4,7 +4,7 @@ from urllib.request import Request
 import urllib.request
 import urllib.parse
 from http.cookiejar import CookieJar
-from python.Config import Config
+from Config import Config
 from bs4 import BeautifulSoup
 import sys
 """
@@ -156,7 +156,7 @@ class DeanCrawler:
         作用：爬取国家成绩表。
         参数：self
         返回值：国家成绩数据（list）
-        最后一次修改时间：2018年1月15日 11:44:13
+        最后一次修改时间：2018年1月15日 13:36:11
     """
     def InternalExamScores(self):
         self.verify()
@@ -180,13 +180,13 @@ class DeanCrawler:
         作用：爬取待确认成绩数据
         参数：self
         返回值：待确认成绩(List)
-        最后一次修改时间：2018年1月15日 11:44:09
+        最后一次修改时间：2018年1月15日 13:36:17
     """
     def unconfirmedScore(self):
         self.verify()
         unconfirmedURL = self.__config.get('UnconfirmedURL')
         self.__curPage = self.__browser.open(unconfirmedURL).read().decode('utf-8')
-        obj = '<td>(.+)</td>'
+        obj = '<td.*>(.+)</td>'
         pattern = re.compile(obj)
         result = pattern.findall(self.__curPage)
         resultList = []

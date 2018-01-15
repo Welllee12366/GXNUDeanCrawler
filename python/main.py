@@ -1,8 +1,19 @@
-﻿from python.Crawler import DeanCrawler
+﻿from Crawler import DeanCrawler
 import sys
+def displayList(LIST):
+    for i in LIST:
+        print(i)
 if __name__ == '__main__':
     crawler = DeanCrawler(sys.argv[1],sys.argv[2])
-    print('综合成绩单\n' + str(crawler.TotalScore()))
-    print('待确认成绩单\n' + str(crawler.unconfirmedScore()))
-    print('课程表数据\n' + str(crawler.classtable()))
-    print('国家成绩单\n' + str(crawler.InternalExamScores()))
+    if sys.argv[3] == '0':
+        LIST = crawler.InternalExamScores()
+    elif sys.argv[3] == '1':
+        LIST = crawler.classtable()
+    elif sys.argv[3] == '2':
+        LIST = crawler.unconfirmedScore()
+    elif sys.argv[3] == '3':
+        LIST = crawler.TotalScore()
+    else:
+        print("没有这个功能")
+        sys.exit(0)
+    displayList(LIST)

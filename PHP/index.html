@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>信息查询接口</title>
+</head>
+<body>
+<h1>请输入您的信息：</h1>
+<form id ="postN" action="./query.php" method="POST"  >
+    <div>
+        <div>
+            <span>用户名：</span><input type="text" name="username" id="username"/> <br />
+            <span>密码：</span><input type="password" name="password" id="password"/> <br />
+            <span>查询模块:</span>
+            <select name="sel_mode">
+                <option value="0">国家成绩单</option>
+                <option value="1">课程表数据</option>
+                <option value="2">待确认成绩</option>
+                <option value="3">综合成绩</option>
+            </select> <br />
+            <button>查询</button>
+
+        </div>
+    </div>
+</form>
+</body>
+</html>
