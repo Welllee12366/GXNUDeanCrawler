@@ -117,6 +117,7 @@ class DeanCrawler:
                 if courses[course][i] != u'\n':
                     tempstr = courses[course][i]
                     tempstr = tempstr.split(u'\n')
+                    cs_list.append('星期' + str(i-3))
                     cs_list.append(tempstr[2])
                     cs_list.append(tempstr[3])
                     cs_list.append(tempstr[4])
