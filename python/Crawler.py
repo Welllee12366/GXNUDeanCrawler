@@ -164,7 +164,7 @@ class DeanCrawler:
         examURL = self.__config.get('exam')
         self.__curPage = self.__browser.open(examURL).read()
         soup = BeautifulSoup(self.__curPage,  "html.parser")
-        tbody = soup.select('html body div#wrapper main#page-wrapper article.row section.row div.col-sm-12 div.panel.panel-default div.panel-body div.table-responsive table.table.table-bordered.table-striped.table-hover tbody td')
+        tbody = soup.select('html body div#wrapper main#page-wrapper article.row section.row div.col-sm-12 div.panel.panel-default div.panel-body div.table-responsive table.table.table-bordered.table-striped.table-hover tbody tr td')
         exam_count = len(tbody)
         exam_result = []
         temp = []
@@ -173,7 +173,7 @@ class DeanCrawler:
                 exam_result.append(temp)
                 temp = []
             temp.append(tbody[i].text)
-            if exam_count == 3 and i == 2:
+            if (i + 1) == exam_count:
                 exam_result.append(temp)
         return exam_result
     """
