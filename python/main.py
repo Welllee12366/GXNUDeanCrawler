@@ -15,3 +15,4 @@ def demo(username,password,sel_mode):
         print("没有这个功能")
         sys.exit(0)
     return LIST
+
