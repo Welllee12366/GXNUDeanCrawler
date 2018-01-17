@@ -28,7 +28,7 @@ class DeanCrawler:
         self.__username = username
         self.__password = password
         self.__curPage = None
-        self.__loginFLAG = self.Login()
+        self.Login()
 
     """
         方法名：Login
@@ -60,10 +60,8 @@ class DeanCrawler:
         obj = '<h3 class="panel-title">学生登录</h3>'
         pattern = re.compile(obj)
         result = pattern.findall(self.__curPage)
-        if len(result) == 0:
-            return True
-        else:
-            return False
+        if len(result) != 0:
+            return "用户名或密码有误，请重试"
     """
         方法名：getcurrentPage
         作用：获取当前访问的页面
@@ -73,18 +71,7 @@ class DeanCrawler:
     """
     def getcurrentPage(self):
         return self.__curPage
-    """
-        方法名：verify
-        作用：验证用户合法性。
-        参数：self
-        返回值：0
-        最后一次修改时间：2018年1月14日 18:52:29
-    """
 
-    def verify(self):
-        if not self.__loginFLAG:
-            print("登录失败，请重试。")
-            sys.exit(0)
     """
         方法名：classtabel
         作用：爬取选课课程表数据
@@ -93,7 +80,6 @@ class DeanCrawler:
         最后一次修改时间：2018年1月15日 11:44:20
     """
     def classtable(self):
-        self.verify()
         classtableURL = self.__config.get('selcourseURL')
         self.__curPage = self.__browser.open(classtableURL).read()
         soup = BeautifulSoup(self.__curPage, "html.parser")
@@ -132,11 +118,13 @@ class DeanCrawler:
         最后一次修改时间：2018年1月15日 11:44:17
     """
     def TotalScore(self):
-        self.verify()
         scoresURL = self.__config.get('scores')
         self.__curPage = self.__browser.open(scoresURL).read()
         null = None
-        jsondata = eval(self.__curPage)
+        try:
+            jsondata = eval(self.__curPage)
+        except:
+            return []
         scores = jsondata['data']
         resultList = []
         for i in scores:
@@ -160,7 +148,6 @@ class DeanCrawler:
         最后一次修改时间：2018年1月15日 13:36:11
     """
     def InternalExamScores(self):
-        self.verify()
         examURL = self.__config.get('exam')
         self.__curPage = self.__browser.open(examURL).read()
         soup = BeautifulSoup(self.__curPage,  "html.parser")
@@ -184,7 +171,6 @@ class DeanCrawler:
         最后一次修改时间：2018年1月15日 13:36:17
     """
     def unconfirmedScore(self):
-        self.verify()
         unconfirmedURL = self.__config.get('UnconfirmedURL')
         self.__curPage = self.__browser.open(unconfirmedURL).read().decode('utf-8')
         obj = '<td.*>(.+)</td>'
