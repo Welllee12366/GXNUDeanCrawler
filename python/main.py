@@ -12,8 +12,7 @@ def demo(username,password,sel_mode):
     elif sel_mode == '3':
         LIST = crawler.TotalScore()
     else:
-        print("没有这个功能")
-        sys.exit(0)
+        return("没有这个功能")
     return LIST
 
 
