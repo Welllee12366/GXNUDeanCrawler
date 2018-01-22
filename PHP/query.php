@@ -6,7 +6,6 @@
     }else
     {
         $ret = ppython("main::demo",$_POST['username'],$_POST['password'],$_POST['sel_mode']);
-        echo(gettype($ret));
         var_dump($ret);
     }
 ?>

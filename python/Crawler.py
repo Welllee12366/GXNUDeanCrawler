@@ -180,7 +180,7 @@ class DeanCrawler:
         temp = []
         for i in result:
             temp.append(i)
-            if (i == u'正常' or i == u'补考' or i == u'重修'):
+            if (i == u'作弊' or i == u'正常' or i == u'补考' or i == u'重修'):
                 resultList.append(temp)
                 temp = []
         return resultList
