@@ -16,8 +16,8 @@
 		}
         .form-signin 
 		{
-          max-width: 300px;
-          padding: 40px;
+          max-width: 600px;
+          padding: 0px;
           margin: 0 auto;
         }		
     </style>
@@ -25,27 +25,39 @@
 <body>
 
 <div class="container">
+	<div class="panel panel-success form-signin">
+    	<div class="panel-heading">
+	<h2 class="form-signin-heading">成绩查询入口</h2>
+	</div>
+        <div class="panel-body">
 
-      <form class="form-signin" action="./demo.php" method="POST">
-        <h2 class="form-signin-heading">  登录</h2>
+       
+        <form class="form-signin" action="./demo.php" method="POST">
+        
+	<span><h5>学号：</h5></span>
         <label for="Username" class="sr-only">学号</label>
         <input type="text" name="username" id="username" class="form-control" placeholder="username" required autofocus>
+	<span><h5>密码：</h5></span>
         <label for="Password" class="sr-only">密码</label>
         <input type="password"name="password" id="password" class="form-control" placeholder="password" required>
+	<span><h5>查询选项：</h5></span>
 		<input type="hidden" name="sel_mode" value="0">
 		<select class="form-control" name="sel_mode" >
-				<option value="0">国家成绩单</option>
+		<option value="2">待确认成绩</option>
+		<option value="3">综合成绩</option>
                 <option value="1">课程表数据</option>
-                <option value="2">待确认成绩</option>
-                <option value="3">综合成绩</option>
+                <option value="0">国家成绩单</option>
 		</select>
-		<div class="checkbox">
-        <label>
-            <input type="checkbox" value="remember-me">记住状态
-        </label>
-        </div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
+	<br />
+        <br />
+   
+        <button class="btn btn-lg btn-primary btn-block" type="submit">查询</button>
+        <br />
+        <h5>感谢：小明同学提供的界面Demo</h5>
+	<h5>Powered By:广西师范大学计算机实验教学中心</h5>
       </form>
+      </div>
+            </div>
 </div> <!-- /container -->
 
 </body>

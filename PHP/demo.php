@@ -6,6 +6,21 @@
 <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">  
 <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+ <style>
+        body 
+	{
+          padding-top: 40px;
+          padding-bottom: 40px;
+          background-image: url("bg2.jpg");
+	  background-size:100% 100% 
+	}
+        .form-signin 
+	{
+          max-width: 1024px;
+          padding: 40px;
+          margin: 0 auto;
+        }		
+    </style>
 </head>
 <body>
 
@@ -22,21 +37,23 @@ if($_POST['username'] == '' || $_POST['password'] == '')
 ?>
 <div class="container">
 	<div class="row clearfix">
-		<div class="col-md-12 column">
+
+		<div class="col-md-12 column form-signin ">
+				<div class="panel panel-info">
+    	<div class="panel-heading">
 			<h2>
 				信息查询结果Demo beta1.0
 			</h2>
 			<p><h3>
-			<?php
-				echo("欢迎:".$_POST['username']."  使用本Demo<br />");
-			?>
 			</h3></p>
-            <p><h4>
+            <p><h5>
                 <?php
                     echo("数据查询时间：".date("Y年m月d日 H时i分s秒",time()));
                 ?>
-            </h4></p>
-			<table class="table">
+            </h5></p>
+        </div>
+         <div class="panel-body">
+			<table class="table table-responsive table-bordered">
 				<thead>
                 <?php
                     if($ret == NULL) {
@@ -46,7 +63,8 @@ if($_POST['username'] == '' || $_POST['password'] == '')
                         if($arrlen== 3){
                             $headstr = "<tr><td>时间</td><td>考试科目</td><td>分数</td></tr>";
                             print($headstr);
-                        }else if($arrlen == 7){
+                        }else if($arrlen == 7 || (($arrlen - 7) % 5) == 0){
+			    $arrlen = 7;
                             $headstr = "<tr><td>课程代号</td><td>课程名称</td><td>上课时间</td><td>周次</td><td>上课时间</td><td>上课地点</td><td>任课教师</td></tr>";
                             print($headstr);
                         }else if($arrlen == 10 || $arrlen == 11)
@@ -54,25 +72,33 @@ if($_POST['username'] == '' || $_POST['password'] == '')
                             $headstr = "<tr><td>年度</td><td>季度</td><td>课程代号</td><td>课程名称</td><td>课程平台</td><td>课程性质</td><td>平时成绩</td><td>考核成绩</td><td>总评成绩</td><td>考试性质</td><td>考试状态</td></tr>";
                             print($headstr);
                         }else if($arrlen == 8){
-                            $headstr ="<tr><td>课程代号</td><td>课程名称</td><td>年度</td><td>季度</td><td>成绩</td><td>等级</td><td>绩点</td><td>学分</td></tr>";
+                            $headstr ="<tr><td>课程代号</td><td>课程名称</td><td>年度</td><td>季度</td><td>成绩</td><td>等级</td><td>学分</td><td绩点</td></tr>";
                             print($headstr);
                         }
                     }
                 ?>
+
 				</thead>
+               <tbody>
                 <?php
                     if($ret == NULL)
                     {
                         return;
                     }else{
-                       // if($arrlen == 3){
+                  
                             for($i = 0;$i < count($ret);$i++){
                                 $rowstr = "<tr>";
                                 $colstr = "";
-                                for($j = 0;$j < count($ret[$i]);$j++){
+			        $countret = count($ret[$i]);
+                                for($j = 0;$j < $countret;$j++){
                                     $tempstr = "<td>";
-                                    if($arrlen == 7 &&$j!=0&& $j % $arrlen ==0){ $colstr.=$tempstr; print($rowstr.$colstr."</tr>");$colstr="<td>".$ret[$i][0]."</td><td>".$ret[$i][1]."</td>";
- }                                   if($arrlen == 8)
+                                    if($arrlen == 7 && $j != 0 && $j % $arrlen == 0 )
+				    { 
+                                         //$colstr.=$tempstr; 
+                                         print($rowstr.$colstr."</tr>");
+                                         $colstr="<td>".$ret[$i][0]."</td><td>".$ret[$i][1]."</td>";
+                                    }                                 
+                                    if($arrlen == 8)
                                     {
                                         if($j == 1){
                                             $tempstr.= $ret[$i][2]."</td>";
@@ -109,11 +135,13 @@ if($_POST['username'] == '' || $_POST['password'] == '')
                     }
                 ?>
 
-				<tbody>
+				
 				</tbody>
 			</table>
 		</div>
 	</div>
+</div>
+</div>
 </div>
 </body>
 </html>
