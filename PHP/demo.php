@@ -24,17 +24,9 @@
 </head>
 <body>
 
-<?php
-require('php_python.php');
-if($_POST['username'] == '' || $_POST['password'] == '')
-{
-    echo("用户名或密码不能为空");
-}else
-{
-    $ret = ppython("main::demo",$_POST['username'],$_POST['password'],$_POST['sel_mode']);
-    //var_dump($ret);
-}
-?>
+
+
+
 <div class="container">
 	<div class="row clearfix">
 
@@ -55,6 +47,16 @@ if($_POST['username'] == '' || $_POST['password'] == '')
          <div class="panel-body">
 			<table class="table table-responsive table-bordered">
 				<thead>
+		<?php
+		require('php_python.php');
+		if($_POST['username'] == '' || $_POST['password'] == '')
+		{
+    			echo("<h4>用户名或密码不能为空!</h4>");
+		}else
+		{
+    			$ret = ppython("main::demo",$_POST['username'],$_POST['password'],$_POST['sel_mode']);
+    		}
+		?>
                 <?php
                     if($ret == NULL) {
                         echo("<h4>没有查询到您的成绩，请确认您的信息填写正确。</h4>");
