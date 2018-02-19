@@ -184,7 +184,17 @@ class DeanCrawler:
                 resultList.append(temp)
                 temp = []
         return resultList
-
-
+    """
+        方法名：getName
+        作用：获取用户的真实姓名
+        参数：self
+        返回值：姓名(List)
+        最后一次修改时间：2018年2月19日 19:02:35
+    """
+    def getName(self):
+        obj = '欢迎(.*)同学使用选课系统'
+        pattern = re.compile(obj)
+        result = pattern.findall(self.__curPage)
+        return result
 
 

@@ -21,6 +21,9 @@
           margin: 0 auto;
         }		
     </style>
+    <?php
+        require('php_python.php');
+    ?>
 </head>
 <body>
 
@@ -33,30 +36,38 @@
 		<div class="col-md-12 column form-signin ">
 				<div class="panel panel-info">
     	<div class="panel-heading">
-			<h2>
-				信息查询结果Demo beta1.0
-			</h2>
-			<p><h3>
-			</h3></p>
-            <p><h5>
-                <?php
-                    echo("数据查询时间：".date("Y年m月d日 H时i分s秒",time()));
-                ?>
-            </h5></p>
+			<?php
+			    $name = ppython("main::demo",$_POST['username'],$_POST['password'],'4');
+			    if(count($name) != 0)
+			    {
+			        echo "<p><h3>欢迎： ".$name[0]." 使用本系统</h3></p>";
+			    }
+			?>
+            <p>
+                <h5 align="right">
+                    <?php
+                        echo("数据查询时间：".date("Y年m月d日 H时i分s秒",time()));
+                    ?>
+                </h5>
+            </p>
+            <p>
+                <h5 align="right">
+                    demo beta2.0 By WellLee
+                </h5>
+            </p>
         </div>
-         <div class="panel-body">
-			<table class="table table-responsive table-bordered">
+        <div class="panel-body">
+		<table class="table table-responsive table-bordered">
 				<thead>
-		<?php
-		require('php_python.php');
-		if($_POST['username'] == '' || $_POST['password'] == '')
-		{
-    			echo("<h4>用户名或密码不能为空!</h4>");
-		}else
-		{
-    			$ret = ppython("main::demo",$_POST['username'],$_POST['password'],$_POST['sel_mode']);
-    		}
-		?>
+		        <?php
+                    if($_POST['username'] == '' || $_POST['password'] == '')
+                    {
+                            echo("<h4>用户名或密码不能为空!</h4>");
+                    }else
+                    {
+                            $ret = ppython("main::demo",$_POST['username'],$_POST['password'],$_POST['sel_mode']);
+                    }
+		        ?>
                 <?php
                     if($ret == NULL) {
                         echo("<h4>没有查询到您的成绩，请确认您的信息填写正确。</h4>");
@@ -66,7 +77,7 @@
                             $headstr = "<tr><td>时间</td><td>考试科目</td><td>分数</td></tr>";
                             print($headstr);
                         }else if($arrlen == 7 || (($arrlen - 7) % 5) == 0){
-			    $arrlen = 7;
+			                $arrlen = 7;
                             $headstr = "<tr><td>课程代号</td><td>课程名称</td><td>上课时间</td><td>周次</td><td>上课时间</td><td>上课地点</td><td>任课教师</td></tr>";
                             print($headstr);
                         }else if($arrlen == 10 || $arrlen == 11)
@@ -74,7 +85,7 @@
                             $headstr = "<tr><td>年度</td><td>季度</td><td>课程代号</td><td>课程名称</td><td>课程平台</td><td>课程性质</td><td>平时成绩</td><td>考核成绩</td><td>总评成绩</td><td>考试性质</td><td>考试状态</td></tr>";
                             print($headstr);
                         }else if($arrlen == 8){
-                            $headstr ="<tr><td>课程代号</td><td>课程名称</td><td>年度</td><td>季度</td><td>成绩</td><td>等级</td><td>学分</td><td绩点</td></tr>";
+                            $headstr ="<tr><td>课程代号</td><td>课程名称</td><td>年度</td><td>季度</td><td>成绩</td><td>等级</td><td>学分</td><td>绩点</td></tr>";
                             print($headstr);
                         }
                     }

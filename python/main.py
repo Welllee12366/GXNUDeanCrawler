@@ -1,5 +1,4 @@
 ﻿from Crawler import DeanCrawler
-import sys
 
 def demo(username,password,sel_mode):
     crawler = DeanCrawler(username,password)
@@ -11,6 +10,8 @@ def demo(username,password,sel_mode):
         LIST = crawler.unconfirmedScore()
     elif sel_mode == '3':
         LIST = crawler.TotalScore()
+    elif sel_mode == '4':
+        LIST = crawler.getName()
     else:
         return("没有这个功能")
     return LIST
