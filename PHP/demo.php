@@ -137,7 +137,10 @@
                                     }
                                     if(count($ret[$i])==13 &&($j==7 || $j==8)){
                                         continue;
-                                     }
+                                    }
+									if(count($ret[$i])==12 &&($j==7)){
+                                        continue;
+                                    }
                                     $tempstr.= $ret[$i][$j]."</td>";
                                     $colstr.= $tempstr;
                                 }
