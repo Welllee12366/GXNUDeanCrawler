@@ -16,4 +16,3 @@ def demo(username,password,sel_mode):
         return("没有这个功能")
     return LIST
 
-

@@ -108,7 +108,16 @@ class DeanCrawler:
                     cs_list.append(tempstr[3])
                     cs_list.append(tempstr[4])
                     cs_list.append(tempstr[5])
-            cs_final.append(cs_list)
+            if len(cs_list) > 7 :
+                cs_final.append(cs_list[:7])
+                temp = []
+                temp.append(cs_list[0])
+                temp.append(cs_list[1])
+                for i in cs_list[7:]:
+                    temp.append(i)
+                cs_final.append(temp)
+            else:
+                cs_final.append(cs_list)
         return cs_final
     """
         方法名：totalScore

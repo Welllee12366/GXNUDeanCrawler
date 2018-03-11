@@ -32,9 +32,8 @@
 
 <div class="container">
 	<div class="row clearfix">
-
 		<div class="col-md-12 column form-signin ">
-				<div class="panel panel-info">
+		<div class="panel panel-info">
     	<div class="panel-heading">
 			<?php
 			    $name = ppython("main::demo",$_POST['username'],$_POST['password'],'4');
@@ -102,7 +101,7 @@
                             for($i = 0;$i < count($ret);$i++){
                                 $rowstr = "<tr>";
                                 $colstr = "";
-			        $countret = count($ret[$i]);
+			                    $countret = count($ret[$i]);
                                 for($j = 0;$j < $countret;$j++){
                                     $tempstr = "<td>";
                                     if($arrlen == 7 && $j != 0 && $j % $arrlen == 0 )
