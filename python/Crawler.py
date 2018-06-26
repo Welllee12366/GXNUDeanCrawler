@@ -206,4 +206,62 @@ class DeanCrawler:
         result = pattern.findall(self.__curPage)
         return result
 
+    """
+        方法名：getcourseJSON
+        作用：获取用户当前的课程JSON信息
+        参数：self, url, campusID
+        返回值：JSON数据
+        最后一次修改时间：2018年6月26日 21:58:01
+    """
+
+    def getcourseJSON(self, url, campusID):
+        JSON = self.__browser.open(url + campusID).read()
+        return JSON
+    """
+        方法名：e_dcourse
+        作用：选课/退课
+        参数：self, url, postdata
+        返回值：服务器响应
+        最后一次修改时间：2018年6月26日 21:58:01
+    """
+    def e_dcourse(self, url, postdata):
+        postdata = urllib.parse.urlencode(postdata).encode('utf-8')
+        request = Request(url, postdata)
+        response = self.__browser.open(request)
+        return response
+    """
+        方法名：generatePOSTDATA
+        作用：根据用户退/选课需求动态生成POST数据
+        参数：self, course, coursetype, commandtype
+        返回值：POST数据(dict)
+        最后一次修改时间：2018年6月26日 21:58:01
+    """
+    def generatePOSTDATA(self, course, coursetype, commandtype):
+        pattern = r'<form name=.+action="(.+)" method=.+'
+        obj = re.compile(pattern)
+        action = obj.findall(course)
+        _token = ''
+        pattern = r'<form name=.+name="_token" value="(.+)"><button type.+'
+        obj = re.compile(pattern)
+        _token = obj.findall(course)
+        pattern = r'<form name=.+name="kcxh" value="(.+)"><input type.+'
+        obj = re.compile(pattern)
+        kcxh = obj.findall(course)
+        if commandtype == 'elect':
+            postdata = {
+                '_token': _token[0],
+                'kcxh': kcxh[0],
+                'type': coursetype,
+            }
+            return action[0], postdata
+        elif commandtype == 'delete':
+            postdata = {
+                "_method": 'delete',
+                '_token': _token[0],
+            }
+            return action[0],postdata
+        else:
+            return None
+
+
 
